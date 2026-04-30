@@ -1,0 +1,46 @@
+-- 
+-- Roll No: 39
+-- Name: Mohammed Rashid T V
+-- Program: Practice Questions - V
+-- 
+
+-- Create Collection
+db.createCollection("orders")
+
+-- 
+-- MongoDB Query Statements
+--
+
+-- Q1. Insert five documents to the collection.
+db.orders.insertMany([
+{order_no:"01", year:2020, paid:"Y", cost:{price:30, currency:"INR"}, items:[{pno:"P1", colors:["blue","black"], quantity:15}], delivery_days:5},
+
+{order_no:"02", year:2020, paid:"Y", cost:{price:13, currency:"DLR"}, items:[{pno:"P2", colors:["white"], quantity:4}], delivery_days:4},
+
+{order_no:"03", year:2018, paid:"N", cost:{price:33, currency:"EUR"}, items:[{pno:"P3", colors:["blue","black"], quantity:4}], delivery_days:4},
+
+{order_no:"04", year:2017, paid:"Y", cost:{price:17, currency:"INR"}, items:[{pno:"P2", colors:["pink","black"], quantity:14},{pno:"P4", colors:["white"], quantity:1}], delivery_days:2},
+
+{order_no:"05", year:2020, paid:"Y", cost:{price:19, currency:"INR"}, items:[{pno:"P1", colors:[""], quantity:15}], delivery_days:3}
+])
+
+-- Q2. Retrieve all documents that contain paid orders.
+db.orders.find({paid:"Y"})
+
+-- Q3. Retrieve all documents that contain paid orders and orders before 2019.
+db.orders.find({paid:"Y", year:{$lt:2019}})
+
+-- Q4. Retrieve all documents that contain unpaid orders or orders before 2019.
+db.orders.find({$or:[{paid:"N"},{year:{$lt:2019}}]})
+
+-- Q5. Retrieve all documents that contain orders whose price is in INR.
+db.orders.find({"cost.currency":"INR"})
+
+-- Q6. Retrieve all documents that contain orders whose price is less than 18 INR.
+db.orders.find({"cost.currency":"INR","cost.price":{$lt:18}})
+
+-- Q7. Retrieve all documents with orders that contain product "P2".
+db.orders.find({"items.pno":"P2"})
+
+-- Q8. Retrieve all documents with orders that contain products whose quantity is less than 13.
+db.orders.find({"items.quantity":{$lt:13}})
